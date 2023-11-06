@@ -6,13 +6,17 @@ import jakarta.validation.constraints.Size;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
+import lombok.NonNull;
 
 @Data
 @AllArgsConstructor
 @NoArgsConstructor
-public class CreateBrandRequest {
+public class CreateModelRequest {
     @NotNull
     @NotBlank
     @Size(min = 3, max = 20)
     private String name;
+    @NotNull
+    @NotBlank
+    private int brandId;
 }
