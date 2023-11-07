@@ -2,9 +2,10 @@ package com.furkan.rentAcar.business.concretes;
 
 import com.furkan.rentAcar.business.abstracts.ModelService;
 import com.furkan.rentAcar.business.requests.CreateModelRequest;
-import com.furkan.rentAcar.business.responses.GetAllBrandsResponse;
+import com.furkan.rentAcar.business.requests.UpdateModelRequest;
 import com.furkan.rentAcar.business.responses.GetAllModelsResponse;
-import com.furkan.rentAcar.core.utilities.mapper.ModelMapperManager;
+import com.furkan.rentAcar.business.responses.GetByIdBrandResponse;
+import com.furkan.rentAcar.business.responses.GetByIdModelResponse;
 import com.furkan.rentAcar.core.utilities.mapper.ModelMapperService;
 import com.furkan.rentAcar.dataAccess.abstracts.ModelRepository;
 import com.furkan.rentAcar.entities.concretes.Brand;
@@ -38,4 +39,23 @@ public class ModelManager implements ModelService {
         Model model = this.modelMapperService.forRequest().map(createModelRequest, Model.class);
         this.modelRepository.save(model);
     }
+
+    @Override
+    public GetByIdModelResponse getByIdModel(int id) {
+        Model model = this.modelRepository.findById(id).orElseThrow();
+        GetByIdModelResponse response = this.modelMapperService.forResponse().map(model, GetByIdModelResponse.class);
+        return response;
+    }
+
+    @Override
+    public void update(UpdateModelRequest updateModelRequest) {
+        Model model = this.modelMapperService.forRequest().map(updateModelRequest, Model.class);
+        this.modelRepository.save(model);
+    }
+
+    @Override
+    public void delete(int id) {
+        this.modelRepository.deleteById(id);
+    }
+
 }
